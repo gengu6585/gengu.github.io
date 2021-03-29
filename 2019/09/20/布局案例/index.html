@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.元素分类1.1块元素 块元素独占一行，默认宽度百分之百，高度自适应 父子元素上边界平齐时，子元素外边距会传递给父元素 相邻块元素之间上下外边距会重合，如上面的元素设置下边距，下面的元素设置上边距，最终两元素上下相距其中最大值。  1.2行内元素 行内元素无法设置宽高 行内元素可以设置内边距、边框、外边距，但是垂直方向不影响页面布局。  1.3行内块元素 可以设置宽高，且宽度默认不会占父元素的百">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css布局">
+<meta property="og:url" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.元素分类1.1块元素 块元素独占一行，默认宽度百分之百，高度自适应 父子元素上边界平齐时，子元素外边距会传递给父元素 相邻块元素之间上下外边距会重合，如上面的元素设置下边距，下面的元素设置上边距，最终两元素上下相距其中最大值。  1.2行内元素 行内元素无法设置宽高 行内元素可以设置内边距、边框、外边距，但是垂直方向不影响页面布局。  1.3行内块元素 可以设置宽高，且宽度默认不会占父元素的百">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-0a9ca8952c83141250a2d9002e6d2047_720w.png">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-5b8d6e8b2b507352900c1ece00018855_r.jpg">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-371eb702274af831df909b2c55d6a14b_720w.png">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-cc8365db5c9cc5ca003ce9afe88592e7_720w.png">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-dd3e636d73682140bf4a781bcd6f576b_720w.png">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-5ebd48f09fac875f0bd25823c76ba7fa_720w.png">
+<meta property="og:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/image-20210202194045517.png">
+<meta property="article:published_time" content="2019-09-20T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:55:03.440Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-0a9ca8952c83141250a2d9002e6d2047_720w.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/09/20/布局案例/"/>
+
+
+
+
+
+  <title>css布局 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">css布局</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-20T17:20:03+08:00">
+                2019-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-元素分类"><a href="#1-元素分类" class="headerlink" title="1.元素分类"></a>1.元素分类</h1><h2 id="1-1块元素"><a href="#1-1块元素" class="headerlink" title="1.1块元素"></a>1.1块元素</h2><ul>
+<li>块元素独占一行，默认宽度百分之百，高度自适应</li>
+<li>父子元素上边界平齐时，子元素外边距会传递给父元素</li>
+<li>相邻块元素之间上下外边距会重合，如上面的元素设置下边距，下面的元素设置上边距，最终两元素上下相距其中最大值。</li>
+</ul>
+<h2 id="1-2行内元素"><a href="#1-2行内元素" class="headerlink" title="1.2行内元素"></a>1.2行内元素</h2><ul>
+<li>行内元素无法设置宽高</li>
+<li>行内元素可以设置内边距、边框、外边距，但是垂直方向不影响页面布局。</li>
+</ul>
+<h2 id="1-3行内块元素"><a href="#1-3行内块元素" class="headerlink" title="1.3行内块元素"></a>1.3行内块元素</h2><ul>
+<li>可以设置宽高，且宽度默认不会占父元素的百分之百</li>
+<li>其他属性同块元素</li>
+</ul>
+<h1 id="2-BFC"><a href="#2-BFC" class="headerlink" title="2.BFC"></a>2.BFC</h1><h2 id="2-1BFC-概念"><a href="#2-1BFC-概念" class="headerlink" title="2.1BFC 概念"></a>2.1BFC 概念</h2><p>Formatting context(格式化上下文) 是 W3C CSS2.1 规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。</p>
+<p>那么 BFC 是什么呢？</p>
+<p>BFC 即 Block Formatting Contexts (块级格式化上下文)，它属于上述定位方案的普通流。</p>
+<p>**具有 BFC 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器所没有的一些特性。<br>**通俗一点来讲，可以把 BFC 理解为一个封闭的大箱子，箱子内部的元素无论如何翻江倒海，都不会影响到外部。</p>
+<h2 id="2-2BFC触发条件"><a href="#2-2BFC触发条件" class="headerlink" title="2.2BFC触发条件"></a>2.2BFC触发条件</h2><ul>
+<li>html 根元素就是一个BFC</li>
+<li>浮动元素：float 除 none 以外的值</li>
+<li>绝对定位元素：position (absolute、fixed)</li>
+<li>display 为 inline-block、table-cells、flex</li>
+<li>overflow 除了 visible 以外的值 (hidden、auto、scroll)</li>
+</ul>
+<blockquote>
+<p>inline-block不适合作为容器，因为宽度丢失了。</p>
+</blockquote>
+<h2 id="2-3BFC特性"><a href="#2-3BFC特性" class="headerlink" title="2.3BFC特性"></a>2.3BFC特性</h2><ul>
+<li><h3 id="同一个BFC下外边距会发生折叠"><a href="#同一个BFC下外边距会发生折叠" class="headerlink" title="同一个BFC下外边距会发生折叠"></a>同一个BFC下外边距会发生折叠</h3></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">div&#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background: lightblue;</span><br><span class="line">    margin: 100px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-0a9ca8952c83141250a2d9002e6d2047_720w.png" alt="img"></p>
+<p>从效果上看，因为两个 div 元素都处于同一个 BFC 容器下 (这里指 body 元素) 所以第一个 div 的下边距和第二个 div 的上边距发生了重叠，所以两个盒子之间距离只有 100px，而不是 200px。</p>
+<p>首先这不是 CSS 的 bug，我们可以理解为一种规范，<strong>如果想要避免外边距的重叠，可以将其放在不同的 BFC 容器中。</strong></p>
+<p>​    </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">.container &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">p &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background: lightblue;</span><br><span class="line">    margin: 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候，两个盒子边距就变成了 200px</p>
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-5b8d6e8b2b507352900c1ece00018855_r.jpg" alt="preview"></p>
+<ul>
+<li> <strong>BFC 可以包含浮动的元素（清除浮动）</strong></li>
+</ul>
+<p>我们都知道，浮动的元素会脱离普通文档流，来看下下面一个例子</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border: 1px solid #000;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 100px;height: 100px;background: #eee;float: left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-371eb702274af831df909b2c55d6a14b_720w.png" alt="img"></p>
+<p>由于容器内元素浮动，脱离了文档流，所以容器只剩下 2px 的边距高度。如果使触发容器的 BFC，那么容器将会包裹着浮动元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border: 1px solid #000;overflow: hidden&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 100px;height: 100px;background: #eee;float: left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic4.zhimg.com/80/v2-cc8365db5c9cc5ca003ce9afe88592e7_720w.png" alt="img"></p>
+<ul>
+<li><strong>BFC 可以阻止元素被浮动元素覆盖</strong></li>
+</ul>
+<p>先来看一个文字环绕效果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;height: 100px;width: 100px;float: left;background: lightblue&quot;</span>&gt;</span>我是一个左浮动的元素<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 200px; height: 200px;background: #eee&quot;</span>&gt;</span>我是一个没有设置浮动, </span><br><span class="line">也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-dd3e636d73682140bf4a781bcd6f576b_720w.png" alt="img"></p>
+<p>这时候其实第二个元素有部分被浮动元素所覆盖，(但是文本信息不会被浮动元素所覆盖) 如果想避免元素被覆盖，可触第二个元素的 BFC 特性，在第二个元素中加入 <strong>overflow: hidden</strong>，就会变成：</p>
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/v2-5ebd48f09fac875f0bd25823c76ba7fa_720w.png" alt="img"></p>
+<p>这个方法可以用来实现两列自适应布局，效果不错，这时候左边的宽度固定，右边的内容自适应宽度(去掉上面右边内容的宽度)。</p>
+<h1 id="3-其他细节"><a href="#3-其他细节" class="headerlink" title="3.其他细节"></a>3.其他细节</h1><ul>
+<li><p>有些网页会设置html和body的高度为：100%，这意味着html的高度为浏览器窗口高度，body自然也为浏览器窗口高度。这通常用来实现当内容高度不足窗口高度时页脚的固定（如下图）。默认html和body的高度为0，有body的内容撑开。所以无需纠结body内部元素的高度加起来不为body的高度，因为在body没有设置overflow：hidden的情况下，没有任何影响。</p>
+<p><img src="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/image-20210202194045517.png" alt="image-20210202194045517"></p>
+</li>
+<li><p>开启绝对定位会脱离文档流，独立于定位参考的所有的元素，但在没有设置偏移量时，位置仍处于原来在文档流中的位置。</p>
+</li>
+<li><p>margin为百分比时，相对的父元素的宽度</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/20/Servlet/" rel="prev" title="Tomcat Servlet基础">
+                Tomcat Servlet基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%85%83%E7%B4%A0%E5%88%86%E7%B1%BB"><span class="nav-text">1.元素分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1%E5%9D%97%E5%85%83%E7%B4%A0"><span class="nav-text">1.1块元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0"><span class="nav-text">1.2行内元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3%E8%A1%8C%E5%86%85%E5%9D%97%E5%85%83%E7%B4%A0"><span class="nav-text">1.3行内块元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-BFC"><span class="nav-text">2.BFC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1BFC-%E6%A6%82%E5%BF%B5"><span class="nav-text">2.1BFC 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2BFC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="nav-text">2.2BFC触发条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3BFC%E7%89%B9%E6%80%A7"><span class="nav-text">2.3BFC特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AABFC%E4%B8%8B%E5%A4%96%E8%BE%B9%E8%B7%9D%E4%BC%9A%E5%8F%91%E7%94%9F%E6%8A%98%E5%8F%A0"><span class="nav-text">同一个BFC下外边距会发生折叠</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%85%B6%E4%BB%96%E7%BB%86%E8%8A%82"><span class="nav-text">3.其他细节</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

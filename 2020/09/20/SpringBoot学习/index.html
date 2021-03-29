@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web框架," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.SpringBoot启动注解@SpringBootApplication其实是三个注解的合并： 123@SpringBootConfiguration	等同于@Configuration注解，是一个别称。@EnableAutoConfiguration	@ComponentScan 默认包扫描同启动类的所有包及其子包  2. @Configuration 和 @Component 区别 一句话">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring boot入门">
+<meta property="og:url" content="http://example.com/2020/09/20/SpringBoot%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.SpringBoot启动注解@SpringBootApplication其实是三个注解的合并： 123@SpringBootConfiguration	等同于@Configuration注解，是一个别称。@EnableAutoConfiguration	@ComponentScan 默认包扫描同启动类的所有包及其子包  2. @Configuration 和 @Component 区别 一句话">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-09-20T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:52:35.956Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="web框架">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2020/09/20/SpringBoot学习/"/>
+
+
+
+
+
+  <title>Spring boot入门 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/20/SpringBoot%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring boot入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-20T17:20:03+08:00">
+                2020-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-SpringBoot启动注解"><a href="#1-SpringBoot启动注解" class="headerlink" title="1.SpringBoot启动注解"></a>1.SpringBoot启动注解</h1><p>@SpringBootApplication其实是三个注解的合并：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span>	等同于<span class="meta">@Configuration</span>注解，是一个别称。</span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>	</span><br><span class="line"><span class="meta">@ComponentScan</span> 默认包扫描同启动类的所有包及其子包</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-Configuration-和-Component-区别"><a href="#2-Configuration-和-Component-区别" class="headerlink" title="2. @Configuration 和 @Component 区别"></a>2. @Configuration 和 @Component 区别</h1><blockquote>
+<p>一句话概括就是 <code>@Configuration</code> 中所有带 <code>@Bean</code> 注解的方法都会被动态代理，因此调用该方法返回的都是同一个实例。</p>
+</blockquote>
+<p>从定义来看， <code>@Configuration</code> 注解本质上还是 <code>@Component</code>，因此 <code>&lt;context:component-scan/&gt;</code> 或者 <code>@ComponentScan</code> 都能处理<code>@Configuration</code> 注解的类。</p>
+<p><code>@Configuration</code> 标记的类必须符合下面的要求：</p>
+<ul>
+<li><p>配置类必须以类的形式提供（不能是工厂方法返回的实例），允许通过生成子类在运行时增强（cglib 动态代理）。</p>
+</li>
+<li><p>配置类不能是 <code>final</code> 类（没法动态代理）。</p>
+</li>
+<li><p>配置注解通常为了通过 <code>@Bean</code> 注解生成 Spring 容器管理的类，</p>
+</li>
+<li><p>配置类必须是非本地的（即不能在方法中声明，不能是 private）。</p>
+</li>
+<li><p>任何嵌套配置类都必须声明为<code>static</code>。</p>
+</li>
+<li><p><code>@Bean</code> 方法可能不会反过来创建进一步的配置类（也就是返回的 bean 如果带有 <code>@Configuration</code>，也不会被特殊处理，只会作为普通的 bean）。</p>
+<h2 id="Component-注意"><a href="#Component-注意" class="headerlink" title="@Component 注意"></a>@Component 注意</h2><p><code>@Component</code> 注解并没有通过 cglib 来代理<code>@Bean</code> 方法的调用，因此像下面这样配置时，就是两个不同的 country。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBeanConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Country <span class="title">country</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Country();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserInfo <span class="title">userInfo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserInfo(country());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有些特殊情况下，我们不希望 <code>MyBeanConfig</code> 被代理（代理后会变成<code>WebMvcConfig$$EnhancerBySpringCGLIB$$8bef3235293</code>）时，就得用 <code>@Component</code>，这种情况下，上面的写法就需要改成下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBeanConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Country country;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Country <span class="title">country</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Country();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserInfo <span class="title">userInfo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserInfo(country);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="3-classpath-与classpath："><a href="#3-classpath-与classpath：" class="headerlink" title="3.classpath*:与classpath："></a>3.classpath*:与classpath：</h1><blockquote>
+<p>classpath：只会到你的class路径中查找找文件。<br>classpath<em>：不仅包含class路径，还包括jar文件中（class路径）进行查找。<br>注意： 用classpath</em>:需要遍历所有的classpath，所以加载速度是很慢的；因此，在规划的时候，应该尽可能规划好资源文件所在的路径，尽量避免使用classpath*。</p>
+</blockquote>
+<h1 id="4-组件注入"><a href="#4-组件注入" class="headerlink" title="4.组件注入"></a>4.组件注入</h1><h2 id="4-1Configuration"><a href="#4-1Configuration" class="headerlink" title="4.1Configuration"></a>4.1Configuration</h2><blockquote>
+<p>每一个标注Configuration的类就等同于一个beans.xml</p>
+</blockquote>
+<ul>
+<li><p>Full模式和Lite模式</p>
+<ul>
+<li><p>full模式：@Configuration（proxyBeanMethods=true）</p>
+<p>Configuration本身会被代理，调用方法时会检查容器是否有该对象。有则直接返回容器中的对象。</p>
+</li>
+<li><p>lite模式：@Configuration（proxyBeanMethods=false）</p>
+<p>第一次载入容器之后，使用同正常类。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-2Import"><a href="#4-2Import" class="headerlink" title="4.2Import"></a>4.2Import</h2><p>直接调用空构造导入一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import(TipException.class)</span></span><br><span class="line"><span class="meta">@Component</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>必须跟在标有组件注解的类上面，单独使用不会被扫描进容器。</p>
+</blockquote>
+<h2 id="4-3Condition"><a href="#4-3Condition" class="headerlink" title="4.3Condition"></a>4.3Condition</h2><p>@Condition为条件装配，存在某个bean才会装配该组件。</p>
+<h2 id="4-4ImportResource"><a href="#4-4ImportResource" class="headerlink" title="4.4ImportResource"></a>4.4ImportResource</h2><p>@ImportResource是为了兼容使用xml配置容器的方式，标注在任意一个组件类上即可加载配置文件的所有beans到容器。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web%E6%A1%86%E6%9E%B6/" rel="tag"># web框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/20/Tomcat%E5%9F%BA%E7%A1%80%E4%B8%8E%E8%A7%A3%E6%83%91/" rel="next" title="Tomcat的多种部署方式">
+                <i class="fa fa-chevron-left"></i> Tomcat的多种部署方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/20/4.%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" rel="prev" title="计算机组成原理（指令系统）">
+                计算机组成原理（指令系统） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-SpringBoot%E5%90%AF%E5%8A%A8%E6%B3%A8%E8%A7%A3"><span class="nav-text">1.SpringBoot启动注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Configuration-%E5%92%8C-Component-%E5%8C%BA%E5%88%AB"><span class="nav-text">2. @Configuration 和 @Component 区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Component-%E6%B3%A8%E6%84%8F"><span class="nav-text">@Component 注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-classpath-%E4%B8%8Eclasspath%EF%BC%9A"><span class="nav-text">3.classpath*:与classpath：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5"><span class="nav-text">4.组件注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1Configuration"><span class="nav-text">4.1Configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2Import"><span class="nav-text">4.2Import</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3Condition"><span class="nav-text">4.3Condition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4ImportResource"><span class="nav-text">4.4ImportResource</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

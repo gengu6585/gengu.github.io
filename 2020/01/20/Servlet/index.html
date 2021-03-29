@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web框架," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.servlet的启动tomcat服务器的配置 确保tomcat已经加入环境变量，在cmd敲入startup能正确启动tomcat服务器    当控制台输出正确的日志信息即为服务器启动成功   2.web.xml配置web.xml是配置servlet的地方，在编写servlet程序之后，需要在这个xml文件里加入对应的映射信息，tomcat服务器才能将浏览器的请求路径映射到servlet的类执行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat Servlet基础">
+<meta property="og:url" content="http://example.com/2020/01/20/Servlet/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.servlet的启动tomcat服务器的配置 确保tomcat已经加入环境变量，在cmd敲入startup能正确启动tomcat服务器    当控制台输出正确的日志信息即为服务器启动成功   2.web.xml配置web.xml是配置servlet的地方，在编写servlet程序之后，需要在这个xml文件里加入对应的映射信息，tomcat服务器才能将浏览器的请求路径映射到servlet的类执行">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200824142819157-1598278032065.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200824143701085.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200824145106699.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200824150509254.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200824164432172.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200904141215326.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200908110303818.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200908110704994.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200908105946276.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200908105925345.png">
+<meta property="og:image" content="http://example.com/2020/01/20/Servlet/image-20200908105727091.png">
+<meta property="article:published_time" content="2020-01-20T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:52:30.974Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="web框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/01/20/Servlet/image-20200824142819157-1598278032065.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2020/01/20/Servlet/"/>
+
+
+
+
+
+  <title>Tomcat Servlet基础 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/20/Servlet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tomcat Servlet基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T17:20:03+08:00">
+                2020-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-servlet的启动"><a href="#1-servlet的启动" class="headerlink" title="1.servlet的启动"></a>1.servlet的启动</h1><h2 id="tomcat服务器的配置"><a href="#tomcat服务器的配置" class="headerlink" title="tomcat服务器的配置"></a>tomcat服务器的配置</h2><ul>
+<li>确保tomcat已经加入环境变量，在cmd敲入startup能正确启动tomcat服务器</li>
+<li><img src="/2020/01/20/Servlet/image-20200824142819157-1598278032065.png" alt="image-20200824142819157-1598278032065"></li>
+</ul>
+<ul>
+<li>当控制台输出正确的日志信息即为服务器启动成功</li>
+<li><img src="/2020/01/20/Servlet/image-20200824143701085.png" alt="image-20200824143701085"></li>
+</ul>
+<h1 id="2-web-xml配置"><a href="#2-web-xml配置" class="headerlink" title="2.web.xml配置"></a>2.web.xml配置</h1><p>web.xml是配置servlet的地方，在编写servlet程序之后，需要在这个xml文件里加入对应的映射信息，tomcat服务器才能将浏览器的请求路径映射到servlet的类执行,在使用ide创建web项目<strong>注意勾选web.xml</strong>文件，没有则需要手动创建</p>
+<p><img src="/2020/01/20/Servlet/image-20200824145106699.png" alt="image-20200824145106699"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Servlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.zwj.ServletTest<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Servlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/blog<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-servlet简介"><a href="#3-servlet简介" class="headerlink" title="3.servlet简介"></a>3.servlet简介</h1><ul>
+<li>tomcat会为客户端发来的每一个正确请求指定一个servlet类来处理这个请求，在tomcat中servlet是一个接口，包含重要的三个方法：</li>
+</ul>
+<blockquote>
+<ol>
+<li>init()    servlet初始化时执行，整个部署过程中指执行一次，用于初始化一些变量</li>
+<li>service()     sevlet真正的服务逻辑</li>
+<li>destroy()      servlet销毁时执行</li>
+</ol>
+</blockquote>
+<p>当客户端通过路径”/blog”访问资源时，tomcat会从xml配置文件中查找并映射到一个servlet实现类，通过servlet处理这个请求,即每一个请求便会创建一个servlet，但只有第一次会执行init方法， 第二次及以后都是执行service方法，destroy在tomcat正常关闭时执行</p>
+<p><img src="/2020/01/20/Servlet/image-20200824150509254.png" alt="image-20200824150509254"></p>
+<ul>
+<li><p>在编写servlet时，我们一般使用servlet的实现类HttpServlet，对html请求的响应逻辑只要写在doGet和doPost方法中即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet(name = &quot;LoginServlet&quot; ,urlPatterns = &quot;/login&quot;)</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现类HTTPServlet已经在service中对常用get和post请求已经做了分发处理</p>
+<blockquote>
+<p><strong>注意：</strong>在重写doGet和doPost方法时，千万要记得删去idea自动添加的super.doGet(req,resp)，否则会报错且doGet向客户端响应时失效</p>
+</blockquote>
+<p><img src="/2020/01/20/Servlet/image-20200824164432172.png" alt="image-20200824164432172"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String method = req.getMethod();</span><br><span class="line">        <span class="keyword">long</span> lastModified;</span><br><span class="line">        <span class="keyword">if</span> (method.equals(<span class="string">&quot;GET&quot;</span>)) &#123;</span><br><span class="line">            lastModified = <span class="keyword">this</span>.getLastModified(req);</span><br><span class="line">            <span class="keyword">if</span> (lastModified == -<span class="number">1L</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.doGet(req, resp);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">long</span> ifModifiedSince;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    ifModifiedSince = req.getDateHeader(<span class="string">&quot;If-Modified-Since&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IllegalArgumentException var9) &#123;</span><br><span class="line">                    ifModifiedSince = -<span class="number">1L</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (ifModifiedSince &lt; lastModified / <span class="number">1000L</span> * <span class="number">1000L</span>) &#123;</span><br><span class="line">                    <span class="keyword">this</span>.maybeSetLastModified(resp, lastModified);</span><br><span class="line">                    <span class="keyword">this</span>.doGet(req, resp);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    resp.setStatus(<span class="number">304</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;HEAD&quot;</span>)) &#123;</span><br><span class="line">            lastModified = <span class="keyword">this</span>.getLastModified(req);</span><br><span class="line">            <span class="keyword">this</span>.maybeSetLastModified(resp, lastModified);</span><br><span class="line">            <span class="keyword">this</span>.doHead(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;POST&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.doPost(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;PUT&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.doPut(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;DELETE&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.doDelete(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;OPTIONS&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.doOptions(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(<span class="string">&quot;TRACE&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.doTrace(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            String errMsg = lStrings.getString(<span class="string">&quot;http.method_not_implemented&quot;</span>);</span><br><span class="line">            Object[] errArgs = <span class="keyword">new</span> Object[]&#123;method&#125;;</span><br><span class="line">            errMsg = MessageFormat.format(errMsg, errArgs);</span><br><span class="line">            resp.sendError(<span class="number">501</span>, errMsg);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="4-servlet上下文对象——ServletContext"><a href="#4-servlet上下文对象——ServletContext" class="headerlink" title="4.servlet上下文对象——ServletContext"></a>4.servlet上下文对象——ServletContext</h1><ol>
+<li>ServletContext是一个接口，它表示servlet的上下文对象</li>
+<li>一个web工程，只有一个ServletContext对象实例</li>
+<li>ServletContext是一个域对象</li>
+<li>ServletContext在web工程部署启动的时候创建，在web工程停止的时候销毁</li>
+</ol>
+<p>作用：可以向map一样供各个servlet之间存储并传递信息，是整个web项目的域对象</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>存数据</th>
+<th>取数据</th>
+<th>删除数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Map</td>
+<td>put()</td>
+<td>get()</td>
+<td>remove()</td>
+</tr>
+<tr>
+<td>ServletContext</td>
+<td>setAttribute()</td>
+<td>getAttribute()</td>
+<td>removeAttribute()</td>
+</tr>
+</tbody></table>
+<h1 id="5-案例——文件上传-下载"><a href="#5-案例——文件上传-下载" class="headerlink" title="5.案例——文件上传/下载"></a>5.案例——文件上传/下载</h1><h2 id="常用API使用"><a href="#常用API使用" class="headerlink" title="常用API使用"></a>常用API使用</h2><ul>
+<li>commons-fileupload-1.2.1.jar </li>
+<li>commons-io-1.4.jar </li>
+</ul>
+<h1 id="6-常见错误与误区"><a href="#6-常见错误与误区" class="headerlink" title="6.常见错误与误区"></a>6.常见错误与误区</h1><h2 id="6-1库文件使用错误"><a href="#6-1库文件使用错误" class="headerlink" title="6.1库文件使用错误"></a>6.1库文件使用错误</h2><p><img src="/2020/01/20/Servlet/image-20200904141215326.png" alt="image-20200904141215326"></p>
+<h2 id="6-2静态页面和动态页面的路径问题"><a href="#6-2静态页面和动态页面的路径问题" class="headerlink" title="6.2静态页面和动态页面的路径问题"></a>6.2静态页面和动态页面的路径问题</h2><p>Servlet中有两种请求资源方式</p>
+<ol>
+<li><p>​    从web根目录下直接访问，如果有个资源在pages，则直接使用{ContextPath}/pages/resource</p>
+<p><img src="/2020/01/20/Servlet/image-20200908110303818.png" alt="image-20200908110303818"></p>
+<p><img src="/2020/01/20/Servlet/image-20200908110704994.png" alt="image-20200908110704994"></p>
+</li>
+<li><p>页面之间可以使用相对路径，但是当一个请求是从Servlet转发会出现问题，因为转发后页面的路径是不会变的，此时点击相对路径的链接会相对当前servlet路径，从而发生错误</p>
+<blockquote>
+<p>因此在一个有servlet转发的jsp中，不能使用简单的相对路径，而应该拼凑出全路径</p>
+<p>通常有下面两种处理</p>
+</blockquote>
+<ul>
+<li><p>定义一个basePath，拼凑出域名+web工程路径</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">   String basePath = request.getScheme()</span><br><span class="line">         + <span class="string">&quot;://&quot;</span> +</span><br><span class="line">         request.getServerName() +</span><br><span class="line">         <span class="string">&quot;:&quot;</span> +</span><br><span class="line">         request.getServerPort() +</span><br><span class="line">         request.getContextPath()</span><br><span class="line">         + <span class="string">&quot;/&quot;</span>;</span><br><span class="line">   pageContext.setAttribute(<span class="string">&quot;basePath&quot;</span>, basePath);</span><br><span class="line"></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>添加contextPath前缀</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;$&#123;pageContext.request.contextPath&#125;/index.jsp&quot;&gt;返回商城&lt;/a&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="6-3浏览器缓存问题解决"><a href="#6-3浏览器缓存问题解决" class="headerlink" title="6.3浏览器缓存问题解决"></a>6.3浏览器缓存问题解决</h2><h3 id="1-谷歌浏览器"><a href="#1-谷歌浏览器" class="headerlink" title="1.谷歌浏览器"></a>1.谷歌浏览器</h3><ul>
+<li>进入开发者模式&gt;右键刷新按钮&gt;清空缓存并重新硬性重新加载</li>
+<li><img src="/2020/01/20/Servlet/image-20200908105946276.png" alt="image-20200908105946276"></li>
+<li>进入设置</li>
+<li><img src="/2020/01/20/Servlet/image-20200908105925345.png" alt="image-20200908105925345"></li>
+</ul>
+<h3 id="2-Vivaldi浏览器"><a href="#2-Vivaldi浏览器" class="headerlink" title="2.Vivaldi浏览器"></a>2.Vivaldi浏览器</h3><p>​        快捷键Shift+Ctrl+Delete</p>
+<p><img src="/2020/01/20/Servlet/image-20200908105727091.png" alt="image-20200908105727091"></p>
+<h1 id="7-Cookie"><a href="#7-Cookie" class="headerlink" title="7.Cookie"></a>7.Cookie</h1><h2 id="1-1-什么是Cookie"><a href="#1-1-什么是Cookie" class="headerlink" title="1.1 什么是Cookie"></a>1.1 什么是Cookie</h2><ol>
+<li>Cookie是服务器通知客户端保存键值对的一种技术。</li>
+<li>客户端有了Cookie后，每次请求都发送给服务器</li>
+<li>每个Cookie的大小不能超过4kb</li>
+</ol>
+<h2 id="2-1-创建Cookie"><a href="#2-1-创建Cookie" class="headerlink" title="2.1 创建Cookie"></a>2.1 创建Cookie</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cookie(“username”, name);</td>
+<td>传入键值对创建cookie</td>
+</tr>
+<tr>
+<td>setMaxAge(60)</td>
+<td>设置失效时间，默认会话结束后失效</td>
+</tr>
+<tr>
+<td>setPath()</td>
+<td>设置指定的生效路径，默认域名下所有的路径都会传递cookie</td>
+</tr>
+</tbody></table>
+<h1 id="8-Session"><a href="#8-Session" class="headerlink" title="8.Session"></a>8.Session</h1><h2 id="1-1-什么是session"><a href="#1-1-什么是session" class="headerlink" title="1.1 什么是session"></a>1.1 什么是session</h2><p>session服务器创建的，存放于request域，每次会话只有一个session，依赖于cookie，创建session的同时会默认叫客户端保存含有sessionId键值对的cookie</p>
+<blockquote>
+<p>Session通过保存于客户端的JSessionId来保存客户端的数据，常用来做购物车，用户登录，注销等</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getSession()</td>
+<td>从request域获取Session</td>
+</tr>
+<tr>
+<td>getId()</td>
+<td>获取id</td>
+</tr>
+<tr>
+<td>setAttribute(“key”,”value”)</td>
+<td>存储键值对</td>
+</tr>
+<tr>
+<td>getAttribute(“key”)</td>
+<td>获取值</td>
+</tr>
+<tr>
+<td>isNew()</td>
+<td>是否为第一次获取</td>
+</tr>
+<tr>
+<td>setMaxInactiveInterval()</td>
+<td>设置失效时间</td>
+</tr>
+<tr>
+<td>getMaxInactiveInterval()</td>
+<td>获取失效时间</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web%E6%A1%86%E6%9E%B6/" rel="tag"># web框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/20/%E5%B8%83%E5%B1%80%E6%A1%88%E4%BE%8B/" rel="next" title="css布局">
+                <i class="fa fa-chevron-left"></i> css布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/20/maven%E5%AD%A6%E4%B9%A0/" rel="prev" title="maven入门">
+                maven入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-servlet%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="nav-text">1.servlet的启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tomcat%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">tomcat服务器的配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-web-xml%E9%85%8D%E7%BD%AE"><span class="nav-text">2.web.xml配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-servlet%E7%AE%80%E4%BB%8B"><span class="nav-text">3.servlet简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-servlet%E4%B8%8A%E4%B8%8B%E6%96%87%E5%AF%B9%E8%B1%A1%E2%80%94%E2%80%94ServletContext"><span class="nav-text">4.servlet上下文对象——ServletContext</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E4%B8%8B%E8%BD%BD"><span class="nav-text">5.案例——文件上传&#x2F;下载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8API%E4%BD%BF%E7%94%A8"><span class="nav-text">常用API使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E4%B8%8E%E8%AF%AF%E5%8C%BA"><span class="nav-text">6.常见错误与误区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1%E5%BA%93%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E9%94%99%E8%AF%AF"><span class="nav-text">6.1库文件使用错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%92%8C%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98"><span class="nav-text">6.2静态页面和动态页面的路径问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-text">6.3浏览器缓存问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-text">1.谷歌浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Vivaldi%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-text">2.Vivaldi浏览器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Cookie"><span class="nav-text">7.Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFCookie"><span class="nav-text">1.1 什么是Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%88%9B%E5%BB%BACookie"><span class="nav-text">2.1 创建Cookie</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Session"><span class="nav-text">8.Session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFsession"><span class="nav-text">1.1 什么是session</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

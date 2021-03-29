@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0.Java常用集合工具使用0.1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque ArrayDeque、ArrayList等之间可以使用构造方法互转。 原理就是数组拷贝。  同时具有栈、队列、双端队列全部接口，分别如下：  Stack     Modifier and Type Method and Description    boolean empty()测试栈是否为空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础">
+<meta property="og:url" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="0.Java常用集合工具使用0.1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque ArrayDeque、ArrayList等之间可以使用构造方法互转。 原理就是数组拷贝。  同时具有栈、队列、双端队列全部接口，分别如下：  Stack     Modifier and Type Method and Description    boolean empty()测试栈是否为空">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210305134605347.png">
+<meta property="og:image" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210228223952633.png">
+<meta property="og:image" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210228223933213.png">
+<meta property="og:image" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210312152919119.png">
+<meta property="article:published_time" content="2021-03-29T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:48:19.205Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210305134605347.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/03/29/算法基础/"/>
+
+
+
+
+
+  <title>算法基础 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-29T17:20:03+08:00">
+                2021-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0-Java常用集合工具使用"><a href="#0-Java常用集合工具使用" class="headerlink" title="0.Java常用集合工具使用"></a>0.Java常用集合工具使用</h1><h2 id="0-1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque"><a href="#0-1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque" class="headerlink" title="0.1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque"></a>0.1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque</h2><blockquote>
+<p>ArrayDeque、ArrayList等之间可以使用构造方法互转。</p>
+<p>原理就是数组拷贝。</p>
+</blockquote>
+<p>同时具有栈、队列、双端队列全部接口，分别如下：</p>
+<ul>
+<li>Stack</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Modifier and Type</th>
+<th>Method and Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>boolean</code></td>
+<td><code>empty()</code><br>测试栈是否为空</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>peek()</code> 在不将其从栈中移除的情况下，查看该栈顶部的对象。在栈为空的时候会报EmptyStackException</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>pop()</code>删除此栈顶部的对象，并将该对象作为此函数的值返回。在栈为空的时候会报EmptyStackException</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>push(E item)</code><br>将一个项目推送到此堆栈的顶部。</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td><code>push(E item)</code><br>将一个项目推送到此堆栈的顶部。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Queue</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Modifier and Type</th>
+<th>Method and Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>boolean</code></td>
+<td><code>add(E e)</code><br>如果可以立即将指定的元素插入此队列，而不会违反容量限制，则在成功时返回true，如果当前没有可用空间，则抛出IllegalStateException。</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>element()</code><br>检索但不删除此队列的头。</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td><code>offer(E e)</code><br>如果可以在不违反容量限制的情况下立即将指定的元素插入此队列。</td>
+</tr>
+<tr>
+<td>E</td>
+<td><code>peek()</code><br>检索但不删除此队列的头部，如果此队列为空，则返回null。</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>poll()</code><br>检索并删除此队列的头部，如果此队列为空，则返回null。</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td><code>remove()</code><br>检索并删除此队列的头。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>Deque</p>
+<p>**First Element (Head)**：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><em>Throws exception</em></th>
+<th><em>Returns special value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Insert</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#addFirst-E-"><code>addFirst(e)</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#offerFirst-E-"><code>offerFirst(e)</code></a></td>
+</tr>
+<tr>
+<td><strong>Remove</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#addFirst-E-"><code>addFirst(e)</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#pollFirst--"><code>pollFirst()</code></a></td>
+</tr>
+<tr>
+<td><strong>Examine</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#getFirst--"><code>getFirst()</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#peekFirst--"><code>peekFirst()</code></a></td>
+</tr>
+</tbody></table>
+<p><strong>Last Element (Tail)</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><em>Throws exception</em></th>
+<th><em>Returns special value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Insert</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#addLast-E-"><code>addLast(e)</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#offerLast-E-"><code>offerLast(e)</code></a></td>
+</tr>
+<tr>
+<td><strong>Remove</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#addFirst-E-"><code>removeLast()</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#pollFirst--"><code>pollLast()</code></a></td>
+</tr>
+<tr>
+<td><strong>Examine</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#getFirst--"><code>getLast()</code></a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html#peekLast--"><code>peekLast()</code></a></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>PriorityQueue：优先队列即堆</p>
+<blockquote>
+<p>往优先队列加入元素时，会自动建堆</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="0-2关于使用HashSet对Object去重"><a href="#0-2关于使用HashSet对Object去重" class="headerlink" title="0.2关于使用HashSet对Object去重"></a>0.2关于使用HashSet对Object去重</h2><blockquote>
+<p>当两个对象使用 <code>==</code>连接时，它会先调用两个对象的hashCode方法比较两个对象的hashCode是否相等（除了自带的Integer、String等已经重写过Object的hashCode方法的对象之外，默认都是不相等），再调用equals方法，当两者都满足时，才视为相等。所以当对自定义Object方法去重时，需要同时重写这两个方法。</p>
+</blockquote>
+<h2 id="0-3java中final修饰对象的传递问题"><a href="#0-3java中final修饰对象的传递问题" class="headerlink" title="0.3java中final修饰对象的传递问题"></a>0.3java中final修饰对象的传递问题</h2><blockquote>
+<p>java中方法参数中，对于final修饰的对象，传递不是原对象指针，而是其copy的指针。</p>
+<p>这就导致Integer、String等对象，在传递时方法内部的修改无法对方法外部产生影响。</p>
+</blockquote>
+<h2 id="0-4Lambda表达式的使用"><a href="#0-4Lambda表达式的使用" class="headerlink" title="0.4Lambda表达式的使用"></a>0.4Lambda表达式的使用</h2><blockquote>
+<p>Lambda表达式的使用必须要用到接口，能够简写的秘密在于这个接口里面的方法很少，通过参数类型或者参数个数能锁定到那个方法，lambda表达式实质为实现了接口中的方法。</p>
+<p>Lambda表达式便捷在于，接口无需指定，当方法的参数约束为某个接口时，会自动匹配到那个接口。</p>
+</blockquote>
+<p><code>::</code>的使用</p>
+<p>使用::可以指定引用方法，是当lambda表达式中恰好只需调用这个方法的简写。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		InterfaceExample com =  Example::<span class="keyword">new</span>;</span><br><span class="line">        <span class="comment">//等效于</span></span><br><span class="line">        InterfaceExample com = (i) -&gt; <span class="keyword">new</span> Integer(i);</span><br><span class="line">		Example bean = com.create();	</span><br><span class="line">		System.out.println(bean);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">InterfaceExample</span></span>&#123;</span><br><span class="line">	<span class="function">Example <span class="title">create</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用法一</span></span><br><span class="line"><span class="keyword">int</span>[] ints = Arrays.stream(integers).mapToInt(Integer::valueOf).toArray();</span><br><span class="line"><span class="comment">//用法二</span></span><br><span class="line">Integer[] integers = Stream.iterate(<span class="number">1</span>, (a) -&gt; a + <span class="number">1</span>).limit(<span class="number">50</span>).toArray(Integer[]::<span class="keyword">new</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="0-5妖魔鬼怪"><a href="#0-5妖魔鬼怪" class="headerlink" title="0.5妖魔鬼怪"></a>0.5妖魔鬼怪</h2><p>使用克隆的栈，在递归退栈的时候竟然给我清空了。</p>
+<p><img src="/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210305134605347.png" alt="image-20210305134605347"></p>
+<blockquote>
+<p>问题解决：java中没有指针，引用类型传参是传递永远是对象或数组的地址，而不是指针。即传递的是箭头的终点，而不是箭头的始端。</p>
+</blockquote>
+<h2 id="0-6数组初始化"><a href="#0-6数组初始化" class="headerlink" title="0.6数组初始化"></a>0.6数组初始化</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[]dp=<span class="keyword">new</span> <span class="keyword">int</span>[amount]</span><br><span class="line">Arrays.fill(dp, -<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="1-贪心"><a href="#1-贪心" class="headerlink" title="1.贪心"></a>1.贪心</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>遵循某种规律，不断<strong>贪心</strong>地选取<strong>当前最优</strong>策略的算法设计方法</p>
+</blockquote>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><ul>
+<li><h3 id="糖果分配：给定一个糖果大小序列和一个需求序列，求最大满足的需求数"><a href="#糖果分配：给定一个糖果大小序列和一个需求序列，求最大满足的需求数" class="headerlink" title="糖果分配：给定一个糖果大小序列和一个需求序列，求最大满足的需求数"></a>糖果分配：给定一个糖果大小序列和一个需求序列，求最大满足的需求数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zwj;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>:zengwenjie</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2021/2/28 16:32</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sweet_allocation</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; sweet = Arrays.asList(<span class="number">20</span>,<span class="number">8</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>);</span><br><span class="line">        List&lt;Integer&gt; need = Arrays.asList(<span class="number">15</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">9</span>);</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">&quot;糖果大小分别为&quot;</span>+<span class="string">&quot;-----&quot;</span>+sweet);</span><br><span class="line">        System.out.println(<span class="string">&quot;需求因子分别为&quot;</span>+<span class="string">&quot;-----&quot;</span>+need);</span><br><span class="line">        <span class="keyword">int</span> num = <span class="keyword">new</span> Sweet_allocation().sweet_allocation(sweet, need);</span><br><span class="line">        System.out.println(<span class="string">&quot;最后能满足的个数&quot;</span>+<span class="string">&quot;-----&quot;</span>+num);</span><br><span class="line">        <span class="keyword">long</span> last = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">&quot;程序执行时间为&quot;</span>+(last-start)+<span class="string">&quot;ms&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sweet_allocation</span><span class="params">(List&lt;Integer&gt; sweet, List&lt;Integer&gt; need)</span> </span>&#123;</span><br><span class="line">        Comparator comparator = <span class="keyword">new</span> Comparator() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> (<span class="keyword">int</span>) o1 - (<span class="keyword">int</span>) o2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        sweet.sort(comparator);</span><br><span class="line">        need.sort(comparator);</span><br><span class="line">        <span class="keyword">int</span> s_size = sweet.size();</span><br><span class="line">        <span class="keyword">int</span> n_size = need.size();</span><br><span class="line">        <span class="keyword">int</span> s = <span class="number">0</span>,n =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (s &lt; s_size &amp;&amp; n &lt; n_size) &#123;</span><br><span class="line">            <span class="keyword">if</span> (((<span class="keyword">int</span>) need.get(n)) &lt;= ((<span class="keyword">int</span>) sweet.get(s))) &#123;</span><br><span class="line">                n++;</span><br><span class="line">            &#125;</span><br><span class="line">                s++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210228223952633.png" alt="image-20210228223952633"></p>
+</li>
+<li><h3 id="摆动数组：给定一个数组，求最长摆动子序列"><a href="#摆动数组：给定一个数组，求最长摆动子序列" class="headerlink" title="摆动数组：给定一个数组，求最长摆动子序列"></a>摆动数组：给定一个数组，求最长摆动子序列</h3></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zwj;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>:zengwenjie</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2021/2/28 18:53</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WiggleMaxLength</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATIC = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UP = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DOWN = <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">int</span>[] array = &#123;<span class="number">1</span>,<span class="number">17</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">16</span>,<span class="number">8</span>&#125;;</span><br><span class="line">        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        System.out.println(<span class="string">&quot;输入的序列为：&quot;</span>+<span class="string">&quot;-----&quot;</span>+ Arrays.toString(array));</span><br><span class="line">        <span class="keyword">int</span> result = <span class="keyword">new</span> WiggleMaxLength().solution(array,list);</span><br><span class="line">        System.out.println(<span class="string">&quot;最长摆动子序列长度为&quot;</span> +list.size());</span><br><span class="line">        System.out.println(<span class="string">&quot;最长摆动子序列为：&quot;</span>+<span class="string">&quot;-----&quot;</span>+list.toString());</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">&quot;程序运行时间&quot;</span> +</span><br><span class="line">                <span class="string">&quot;-----&quot;</span>+(start-end)+<span class="string">&quot;ms&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solution</span><span class="params">(<span class="keyword">int</span> [] array, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//开始状态设置设为 不变</span></span><br><span class="line">        <span class="keyword">int</span> state = STATIC;</span><br><span class="line">        <span class="keyword">int</span> maxLength = <span class="number">1</span>;</span><br><span class="line">        list.add(array[<span class="number">0</span>]);</span><br><span class="line"><span class="comment">//      从第二位元素开始遍历，比较与前一个元素的大小修改状态</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="keyword">case</span> STATIC:</span><br><span class="line">                    <span class="keyword">if</span> (array[i - <span class="number">1</span>] &lt; array[i]) &#123;</span><br><span class="line">                        state = UP;</span><br><span class="line">                        maxLength++;</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array[i - <span class="number">1</span>] &gt; array[i]) &#123;</span><br><span class="line">                        state = DOWN;</span><br><span class="line">                        maxLength++;</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">case</span> UP:</span><br><span class="line">                    <span class="keyword">if</span> (array[i - <span class="number">1</span>] &lt; array[i]) &#123;</span><br><span class="line">                        <span class="comment">//如果一直增加，则移除上次加入list的数，再加入当前这个更大的数，</span></span><br><span class="line">                        <span class="comment">//保证最后加入摆动子序列是一直递增得到最大的那个数</span></span><br><span class="line">                        list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array[i - <span class="number">1</span>] &gt; array[i]) &#123;</span><br><span class="line">                        state = DOWN;</span><br><span class="line">                        maxLength++;</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> DOWN:</span><br><span class="line">                    <span class="keyword">if</span> (array[i - <span class="number">1</span>] &lt; array[i]) &#123;</span><br><span class="line">                        state = UP;</span><br><span class="line">                        maxLength++;</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array[i - <span class="number">1</span>] &gt; array[i]) &#123;</span><br><span class="line">                        <span class="comment">//如果一直减少，则移除上次加入list的数，再加入当前这个更小的数，</span></span><br><span class="line">                        <span class="comment">//保证最后加入摆动子序列是一直递减得到最小的那个数</span></span><br><span class="line">                        list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">                        list.add(array[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxLength;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210228223933213.png" alt="image-20210228223933213"></p>
+<h1 id="2-递归"><a href="#2-递归" class="headerlink" title="2.递归"></a>2.递归</h1><blockquote>
+<p>把一个大型复杂的问题层层转化为一个与原问题相似的规模较小的问题来求解的思想</p>
+</blockquote>
+<h1 id="3-回溯"><a href="#3-回溯" class="headerlink" title="3.回溯"></a>3.回溯</h1><blockquote>
+<p>回溯法又称为试探法，但当探索到第一步时，发现原先的选择达不到目标，就退回一步重新选择，这种走不通就退回再走的思想成为回溯法。</p>
+</blockquote>
+<h1 id="4-二叉树"><a href="#4-二叉树" class="headerlink" title="4.二叉树"></a>4.二叉树</h1><h2 id="4-1层序遍历记录高度的两种方法："><a href="#4-1层序遍历记录高度的两种方法：" class="headerlink" title="4.1层序遍历记录高度的两种方法："></a>4.1层序遍历记录高度的两种方法：</h2><blockquote>
+<ol>
+<li><p>根节点的高度为0，每一次循环（弹出结点，加入该结点的结点）在加入结点的同时，把当前结点高度+1绑定给新加入节点。<em>使用键值对把结点和高度绑定</em></p>
+</li>
+<li><p>第一次循环时，队列只含有一个结点，执行一次循环后得到恰好是第二层的所有结点。</p>
+<p>如果在循环之前记录队列的个数size，就知道在执行size次循环后恰好是下一层的所有结点。</p>
+<p>由此类推。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="4-2二叉树的前中后续遍历的非递归写法"><a href="#4-2二叉树的前中后续遍历的非递归写法" class="headerlink" title="4.2二叉树的前中后续遍历的非递归写法"></a>4.2二叉树的前中后续遍历的非递归写法</h2><blockquote>
+<p>一般有两种写法，<code>指针移动法</code>和 <code>退栈法</code>，前者适应三种遍历，后者只使用前序遍历和后续遍历。</p>
+</blockquote>
+<ul>
+<li><p>指针移动法</p>
+<p>前序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;Integer&gt; <span class="title">preorder</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        ArrayDeque&lt;TreeNode&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        TreeNode p = node;</span><br><span class="line">        TreeNode lastVisited = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty() || p != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">                result.add(p.val); <span class="comment">//遍历</span></span><br><span class="line">                stack.push(p);</span><br><span class="line">                p = p.left;</span><br><span class="line">            &#125;</span><br><span class="line">            p=stack.pop();</span><br><span class="line">            p = p.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>中序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;Integer&gt; <span class="title">inorder</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        ArrayDeque&lt;TreeNode&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        TreeNode p = node;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty() || p != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(p);</span><br><span class="line">                p = p.left;</span><br><span class="line">            &#125;</span><br><span class="line">            p=stack.pop();</span><br><span class="line">			result.add(p.val); <span class="comment">//遍历</span></span><br><span class="line">            p = p.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;Integer&gt; <span class="title">postorder</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        ArrayDeque&lt;TreeNode&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        TreeNode p = node;</span><br><span class="line">        TreeNode lastVisited = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty() || p != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(p);</span><br><span class="line">                p = p.left;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            p=stack.pop();</span><br><span class="line">            <span class="keyword">if</span>(p.right==<span class="keyword">null</span>||p.right==lastVisited)&#123;</span><br><span class="line">                result.add(p.val); <span class="comment">//遍历</span></span><br><span class="line">                p=<span class="keyword">null</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> p = p.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>退栈法：直接把层序遍历的栈改成堆，调整入栈顺序即可得到前序遍历和后序遍历。</p>
+<p>前序遍历：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;Integer&gt; <span class="title">preorder</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        ArrayDeque&lt;TreeNode&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        LinkedList&lt;Integer&gt; result = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(root);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode temp = stack.pop();</span><br><span class="line">            result.addLast(temp.val); <span class="comment">//遍历</span></span><br><span class="line">            <span class="keyword">if</span> (temp.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(temp.right);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (temp.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(temp.left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序遍历：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;Integer&gt; <span class="title">postorder</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        ArrayDeque&lt;TreeNode&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        LinkedList&lt;Integer&gt; result = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(root);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode temp = stack.pop();</span><br><span class="line">            result.addFirst(temp.val); <span class="comment">//遍历，这里利用 中右左 的前序遍历逆序就是后序遍历</span></span><br><span class="line">            <span class="keyword">if</span> (temp.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(temp.left);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//后入栈的会先被遍历，故为 中右左</span></span><br><span class="line">            <span class="keyword">if</span> (temp.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(temp.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="5-图"><a href="#5-图" class="headerlink" title="5.图"></a>5.图</h1><h3 id="5-1环的判断"><a href="#5-1环的判断" class="headerlink" title="5.1环的判断"></a>5.1环的判断</h3><ol>
+<li><p>使用深搜，但是对visited数组修改为三种状态，深搜第一步先把当前结点的状态设置为<code>正在遍历</code>，每次对临接结点深搜之前，如果该结点的状态是<code>正在遍历</code>说明遇到了未搜索完退栈的结点，即出现环路，返回false。</p>
+</li>
+<li><p>使用广搜，邻接表进行拓扑排序是不方便对图的入度进行判断，一般会先准备好入度数组，从入读为0的结点开始进行广搜。若最后结点存在未访问结点，即有环。</p>
+<blockquote>
+<p>广搜也可用三种状态标记，因为可能会出现一个结点被多次添加到队列的情况。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="5-2使用广搜得到单源最短路径（距离相同要求返回多条结果）"><a href="#5-2使用广搜得到单源最短路径（距离相同要求返回多条结果）" class="headerlink" title="5.2使用广搜得到单源最短路径（距离相同要求返回多条结果）"></a>5.2使用广搜得到单源最短路径（距离相同要求返回多条结果）</h2><blockquote>
+<p>遇到最短路径问题是时，往往需要准备一个数组（初始值为-1）记录搜索路径下所有结点的距离始点的距离，当临接点的距离大于所记录的距离不对该临界点进行搜索。</p>
+<p>这样处理既避免了环路的问题。</p>
+</blockquote>
+<h1 id="6-动态规划"><a href="#6-动态规划" class="headerlink" title="6.动态规划"></a>6.动态规划</h1><h2 id="6-1动态规划基础"><a href="#6-1动态规划基础" class="headerlink" title="6.1动态规划基础"></a>6.1动态规划基础</h2><ul>
+<li>动态规划是运筹学的一个分支，是求解决策过程最优化的数学方法。它是20世界50年代初美国数学家R.E.Bellman等人提出的最优化原理，它利用各阶段之间的关系，逐个求解，最终求得全局最优解。在设计动态规划算法时，需要确认原问题和子问题，动态规划状态，边界状态值，状态转移方程等关键因素。</li>
+</ul>
+<blockquote>
+<p>动态规划的状态转移方程不一定是连续的，方程的左边也可能出现很多个状态。</p>
+<p>一个状态也可能需要保存多个值。    </p>
+</blockquote>
+<h2 id="例题："><a href="#例题：" class="headerlink" title="例题："></a>例题：</h2><ol>
+<li><p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</p>
+<blockquote>
+<p>输入：[1,2,3,1]<br>输出：4<br>解释：偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。</p>
+<pre><code> 偷窃到的最高金额 = 1 + 3 = 4 。
+</code></pre>
+</blockquote>
+<p>dp[i]=Max{dp[i-1]),dp[i-2]+nums[i]}</p>
+</li>
+<li><p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p><strong>注意：</strong>给定 <em>n</em> 是一个正整数。</p>
+<blockquote>
+<p>输入： 2<br>输出： 2<br>解释： 有两种方法可以爬到楼顶。</p>
+<ol>
+<li> 1 阶 + 1 阶</li>
+<li> 2 阶</li>
+</ol>
+</blockquote>
+<p>状态方程：</p>
+<p>dp[i]=<code>dp[i-1]</code>+<code>dp[i-2]</code></p>
+</li>
+<li><p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
+<p>你可以认为每种硬币的数量是无限的</p>
+<blockquote>
+<p>输入：coins = [1, 2, 5], amount = 11<br>输出：3<br>解释：11 = 5 + 5 + 1</p>
+</blockquote>
+<p>状态方程：</p>
+<p>设金额数组，int dp [amount]</p>
+<p>dp[i]=Min{<code>dp[i-coins[0]]</code>,<code>dp[i-coins[1]]</code>,<code>dp[i-coins[2]]</code>…}+1</p>
+<blockquote>
+<p>动态规划求解可以自顶向下，也可以自底向上。</p>
+<p>自顶向下时使用递归，递归迭代求解子问题时会出现很多重复的子问题计算，此时需要保存子问题的结果，也称为记忆化。</p>
+<p>自底向上时，从最小规模的问题开始，直到求解出所要去的问题规模。避免了递归开栈的消耗。</p>
+</blockquote>
+</li>
+<li><p>背包问题：</p>
+<ul>
+<li>可重复使用物件：上硬币找零</li>
+<li>不可重复使用物件：</li>
+</ul>
+</li>
+<li><p>二维背包问题</p>
+</li>
+</ol>
+<h1 id="7-特殊数据结构"><a href="#7-特殊数据结构" class="headerlink" title="7.特殊数据结构"></a>7.特殊数据结构</h1><h2 id="7-1Tried树（字典树）"><a href="#7-1Tried树（字典树）" class="headerlink" title="7.1Tried树（字典树）"></a>7.1Tried树（字典树）</h2><p>trie树，又称字典树或前缀树，是一种    有序的、用于统计、排序和存储字符串的数据结构，它与二叉查找树不同，关键字不是直接保存在节点中，而是由结点在树中的位置决定。</p>
+<p><img src="/2021/03/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/image-20210312152919119.png" alt="image-20210312152919119"></p>
+<p>每个节点都包含一个节点数组，和一个结束标志。定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX_CHAR_NUM = <span class="number">26</span>;</span><br><span class="line">    TrieNode[] child;</span><br><span class="line">    <span class="keyword">boolean</span> is_end;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">(<span class="keyword">boolean</span> is_end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.child = <span class="keyword">new</span> TrieNode[MAX_CHAR_NUM];</span><br><span class="line">        <span class="keyword">this</span>.is_end = is_end;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2并查集"><a href="#7-2并查集" class="headerlink" title="7.2并查集"></a>7.2并查集</h2><blockquote>
+<p>一棵树表示一个集合，两个集合的合并并非是传入两个树节点返回合并后的树根结点。</p>
+<p>并查集的实现一般就是对数组进行操作，数组中最初就有包括了所有的元素。</p>
+<p>借助一个与之等长的parent数组，用数组下标建立两个元素之间的父子关系。</p>
+</blockquote>
+<p>并查集的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//传递的x，y为原数组中的下标，原数组中的树形结构关系会保存在parent中，parent初始化自己（自己是自己的爸爸）</span></span><br><span class="line"><span class="comment">//这里的rank是优化用的，避免树形结构成串，每次联结两个集合时先判断谁更高。</span></span><br><span class="line"><span class="comment">//size数组是用来记录集合的元素个数。</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y,<span class="keyword">int</span> []parent,<span class="keyword">int</span> []rank,<span class="keyword">int</span> []size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (connected(x, y, parent)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> x_parent = find(x, parent);</span><br><span class="line">    <span class="keyword">int</span> y_parent = find(y, parent);</span><br><span class="line">    <span class="keyword">int</span> x_size = size[x_parent];</span><br><span class="line">    <span class="keyword">int</span> y_size = size[y_parent];</span><br><span class="line">    <span class="comment">//爸爸不一样说明两者是不同集合的，这是才需要合并</span></span><br><span class="line">    <span class="keyword">if</span> (x_parent != y_parent) &#123;</span><br><span class="line">        <span class="keyword">if</span> (rank[x_parent] &gt; rank[y_parent]) &#123;</span><br><span class="line">            parent[y_parent] = x_parent;</span><br><span class="line">            size[x_parent] = x_size + y_size;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rank[x_parent] &lt; rank[y_parent]) &#123;</span><br><span class="line">            parent[x_parent] = y_parent;</span><br><span class="line">            size[y_parent] = x_size + y_size;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parent[y_parent] = x_parent;</span><br><span class="line">            size[x_parent] = x_size + y_size;</span><br><span class="line">            rank[x_parent]++;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//爸爸相同说明两元素处于同一棵树中</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">connected</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y,<span class="keyword">int</span> []parent)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> find(x,parent) == find(y,parent);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//找爸爸</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> []parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = x;</span><br><span class="line">        <span class="keyword">while</span> (result != parent[result]) &#123;</span><br><span class="line">            result = parent[result];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-3线段树"><a href="#7-3线段树" class="headerlink" title="7.3线段树"></a>7.3线段树</h2><p>平衡二叉树，以一个数组建立线段树，是对<code>mid往左</code>的数（包含mid）建立<code>左线段树</code>，对<code>mid往右</code>的数建立<code>右线段树</code>，并以左右子树<code>数的加和</code>作为根结点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/20/4.%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" rel="next" title="计算机组成原理（指令系统）">
+                <i class="fa fa-chevron-left"></i> 计算机组成原理（指令系统）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-Java%E5%B8%B8%E7%94%A8%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8"><span class="nav-text">0.Java常用集合工具使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1java%E4%B8%AD%E5%A0%86%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%E2%80%94%E2%80%94ArrayDeque"><span class="nav-text">0.1java中堆栈和队列的使用：直接使用双端队列——ArrayDeque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-2%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8HashSet%E5%AF%B9Object%E5%8E%BB%E9%87%8D"><span class="nav-text">0.2关于使用HashSet对Object去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-3java%E4%B8%ADfinal%E4%BF%AE%E9%A5%B0%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BC%A0%E9%80%92%E9%97%AE%E9%A2%98"><span class="nav-text">0.3java中final修饰对象的传递问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-4Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">0.4Lambda表达式的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-5%E5%A6%96%E9%AD%94%E9%AC%BC%E6%80%AA"><span class="nav-text">0.5妖魔鬼怪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-6%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">0.6数组初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%B4%AA%E5%BF%83"><span class="nav-text">1.贪心</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%96%E6%9E%9C%E5%88%86%E9%85%8D%EF%BC%9A%E7%BB%99%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%B3%96%E6%9E%9C%E5%A4%A7%E5%B0%8F%E5%BA%8F%E5%88%97%E5%92%8C%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E5%BA%8F%E5%88%97%EF%BC%8C%E6%B1%82%E6%9C%80%E5%A4%A7%E6%BB%A1%E8%B6%B3%E7%9A%84%E9%9C%80%E6%B1%82%E6%95%B0"><span class="nav-text">糖果分配：给定一个糖果大小序列和一个需求序列，求最大满足的需求数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%86%E5%8A%A8%E6%95%B0%E7%BB%84%EF%BC%9A%E7%BB%99%E5%AE%9A%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%EF%BC%8C%E6%B1%82%E6%9C%80%E9%95%BF%E6%91%86%E5%8A%A8%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-text">摆动数组：给定一个数组，求最长摆动子序列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%80%92%E5%BD%92"><span class="nav-text">2.递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%9B%9E%E6%BA%AF"><span class="nav-text">3.回溯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-text">4.二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E8%AE%B0%E5%BD%95%E9%AB%98%E5%BA%A6%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-text">4.1层序遍历记录高度的两种方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E4%B8%AD%E5%90%8E%E7%BB%AD%E9%81%8D%E5%8E%86%E7%9A%84%E9%9D%9E%E9%80%92%E5%BD%92%E5%86%99%E6%B3%95"><span class="nav-text">4.2二叉树的前中后续遍历的非递归写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%9B%BE"><span class="nav-text">5.图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1%E7%8E%AF%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-text">5.1环的判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%90%9C%E5%BE%97%E5%88%B0%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%EF%BC%88%E8%B7%9D%E7%A6%BB%E7%9B%B8%E5%90%8C%E8%A6%81%E6%B1%82%E8%BF%94%E5%9B%9E%E5%A4%9A%E6%9D%A1%E7%BB%93%E6%9E%9C%EF%BC%89"><span class="nav-text">5.2使用广搜得到单源最短路径（距离相同要求返回多条结果）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">6.动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%9F%BA%E7%A1%80"><span class="nav-text">6.1动态规划基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98%EF%BC%9A"><span class="nav-text">例题：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">7.特殊数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1Tried%E6%A0%91%EF%BC%88%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%89"><span class="nav-text">7.1Tried树（字典树）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-text">7.2并查集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-text">7.3线段树</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

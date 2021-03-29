@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="开发工具," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IDEA常用快捷键 ctrl+shift+E   显示最近的编辑位置 alt+D 禁用&#x2F;启用断点（自定义）  IDEA使用心得1.web使用中的热部署VS重新部署 在debug模式中，点击更新类和资源可以直接热部署，不需要重新部署工件   2.断点使用技巧2.1点击按钮可以一键禁用所有断点 2.2 断点的不可追踪 由于java代码中都会常见地使用动态代理技术，动态代理相当于用代码在内存中生成了一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA使用记录">
+<meta property="og:url" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="IDEA常用快捷键 ctrl+shift+E   显示最近的编辑位置 alt+D 禁用&#x2F;启用断点（自定义）  IDEA使用心得1.web使用中的热部署VS重新部署 在debug模式中，点击更新类和资源可以直接热部署，不需要重新部署工件   2.断点使用技巧2.1点击按钮可以一键禁用所有断点 2.2 断点的不可追踪 由于java代码中都会常见地使用动态代理技术，动态代理相当于用代码在内存中生成了一个">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200908172543212.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200908171949890.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210128175250125.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910160149221.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910160431449.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910161612894.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910161452217.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910162056631.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910162245552.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131194538491.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131194917853.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131195218483.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131195550194.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131200448223.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151054391.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151711865.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914170333397.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151507681.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151903313.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914152053874.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914152204019.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914153613297.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914154725853.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20201103110604953.png">
+<meta property="og:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20201103110852382.png">
+<meta property="article:published_time" content="2020-04-29T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T09:51:56.571Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="开发工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200908172543212.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2020/04/29/IDEA使用与快捷键/"/>
+
+
+
+
+
+  <title>IDEA使用记录 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IDEA使用记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-29T17:20:03+08:00">
+                2020-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IDEA常用快捷键"><a href="#IDEA常用快捷键" class="headerlink" title="IDEA常用快捷键"></a>IDEA常用快捷键</h1><ol>
+<li><code>ctrl+shift+E</code>   显示最近的编辑位置</li>
+<li><code>alt+D</code> 禁用/启用断点（自定义）</li>
+</ol>
+<h1 id="IDEA使用心得"><a href="#IDEA使用心得" class="headerlink" title="IDEA使用心得"></a>IDEA使用心得</h1><h2 id="1-web使用中的热部署VS重新部署"><a href="#1-web使用中的热部署VS重新部署" class="headerlink" title="1.web使用中的热部署VS重新部署"></a>1.web使用中的热部署VS重新部署</h2><blockquote>
+<p>在debug模式中，点击更新类和资源可以直接热部署，不需要重新部署工件</p>
+</blockquote>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200908172543212.png" alt="image-20200908172543212"></p>
+<h2 id="2-断点使用技巧"><a href="#2-断点使用技巧" class="headerlink" title="2.断点使用技巧"></a>2.断点使用技巧</h2><h3 id="2-1点击按钮可以一键禁用所有断点"><a href="#2-1点击按钮可以一键禁用所有断点" class="headerlink" title="2.1点击按钮可以一键禁用所有断点"></a>2.1点击按钮可以一键禁用所有断点</h3><p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200908171949890.png" alt="image-20200908171949890"></p>
+<h2 id="2-2-断点的不可追踪"><a href="#2-2-断点的不可追踪" class="headerlink" title="2.2 断点的不可追踪"></a>2.2 断点的不可追踪</h2><ul>
+<li><p>由于java代码中都会常见地使用动态代理技术，动态代理相当于用代码在内存中生成了一个新的.class文件作为代理对象使用，代理有同原对象一样的方法，但调用前后会定义写操作对原对象进行增强。</p>
+</li>
+<li><p>当断点执行到代理对象时断点不可追踪，下一步则直接跳出。但值得注意的是，代理对象终究是代理，它紧接着执行原对象的方法。</p>
+</li>
+<li><p>spring容器中所有的对象都是动态代理增强过的对象，当容器中代理对象执行方法是通常会被拦截，而导致执行到这种方法时点击下一步idea会自动跳到代理对象调用invokesuper( )后的。此时栈中已经多出很多帧，<strong>期间断点不可追踪</strong>，只能看到过程。</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210128175250125.png" alt="image-20210128175250125"> </p>
+</li>
+</ul>
+<h2 id="2-3-断点突遇天外”帧”来如何处理"><a href="#2-3-断点突遇天外”帧”来如何处理" class="headerlink" title="2.3 断点突遇天外”帧”来如何处理"></a>2.3 断点突遇天外”帧”来如何处理</h2><blockquote>
+<p>1.找到上一步所处帧位置的下一行，打断点并运行至此。</p>
+<p>2.点击”跳出”，逐帧跳出。每次点击”跳出”为弹出一帧。</p>
+</blockquote>
+<h2 id="2-4IDEA中的各种断点"><a href="#2-4IDEA中的各种断点" class="headerlink" title="2.4IDEA中的各种断点"></a>2.4IDEA中的各种断点</h2><ul>
+<li><p>行断点</p>
+<p>直接点击所在行标注即为行断点</p>
+</li>
+<li><p>详细断点</p>
+<p>按住shift点击所在行会弹出断点配置的高级配置</p>
+</li>
+<li><p>方法断点</p>
+<p>可以打在任意方法上包括接口中方法，会自动停在方法的第一行和方法的最后一行。</p>
+</li>
+<li><p>异常断点</p>
+<p>点击查看所有断点可以添加异常断点，如添加一个空指针断点，所有会发生空指针错误的前一行执行时会停住。</p>
+</li>
+<li><p>字段断点</p>
+<p>断点标注在类的字段上，即监控该字段，每次修改时会停住。</p>
+</li>
+</ul>
+<h2 id="3-捕获的错误处理"><a href="#3-捕获的错误处理" class="headerlink" title="3.捕获的错误处理"></a>3.捕获的错误处理</h2><p>捕获的错误如果不输出调用栈信息则不会显示任何错误。</p>
+<p>在有些使用日志记录错误信息的程序，在运行过程中如果不添上调用栈打印的语句就很难排错</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910160149221.png" alt="image-20200910160149221"></p>
+<p>捕获源码抛出的错误，再自己抛出一个对排错更友好的错误</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910160431449.png" alt="image-20200910160431449"></p>
+<h2 id="4-从github上下载的项目的启动"><a href="#4-从github上下载的项目的启动" class="headerlink" title="4.从github上下载的项目的启动"></a>4.从github上下载的项目的启动</h2><p>从github上下载的项目转移到自己电脑的时往往会出现一些错误，常见的有：</p>
+<ul>
+<li><p>编码错误——编码错误在idea右下角设置项目编码可以迅速解决</p>
+</li>
+<li><p>文件路径错误</p>
+<p>因为当项目导入idea中时，idea只会默认地标注自己能识别的原码的目录，如java、src等等</p>
+<p>而大多数情况下原码作者可能标注了多个源码目录，需要对运行的错误信息适当的标注源码目录。</p>
+</li>
+</ul>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910161612894.png" alt="image-20200910161612894"></p>
+<blockquote>
+<p>ide中”结构目录”最终都不是最终的输出结构，只有标注了源码或资源的目录下的文件才会加入到真正的类路径。如上四个文件夹若要正常使用于代码中，除了lib之外全部都要标位源码或资源目录。（添加为库的lib在编译时不会输出到类路径，但运行时会处于同一类路径）最终所有标为源码或资源目录下的所有文件都会输出到一个叫classes的文件下。故实际所有标为源码或资源目录以及web目录处于同一层。</p>
+</blockquote>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910161452217.png" alt="image-20200910161452217"></p>
+<ul>
+<li><p>库文件错误</p>
+<ul>
+<li><p>​    检查项目结构的库文件，如果没有添加到库则新建项目库</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910162056631.png" alt="image-20200910162056631"></p>
+</li>
+<li><p>​    选择添加lib文件</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200910162245552.png" alt="image-20200910162245552"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-双击打开首页"><a href="#5-双击打开首页" class="headerlink" title="5.双击打开首页"></a>5.双击打开首页</h2><p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131194538491.png" alt="image-20210131194538491"></p>
+<h2 id="6-工件的部署"><a href="#6-工件的部署" class="headerlink" title="6.工件的部署"></a>6.工件的部署</h2><p>web项目不同于常规项目，最大的不同是web项目不是由我们启动，而是写好代码部署在指定的环境，让服务器来执行我们写的代码。这类项目部署的文件在idea中叫构件“artifacts”</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131194917853.png" alt="image-20210131194917853"></p>
+<p>web项目运行前有两步，一是正常编译java代码，二是输出构件“artifacts”</p>
+<p>​    <img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131195218483.png" alt="image-20210131195218483"></p>
+<p>编译好的java代码和web项目所用到的库都会统一拷贝到WEB-IF目录下，java代码从类路径打包成classes，项目库放到lib，下图target为编译生成的java代码，artifacts为输出的构件</p>
+<blockquote>
+<p>在最终输出的构件里，WEB-INF下放lib和classes是Tomcat约定的，只有这么放才能让Tomcat正确调用。</p>
+</blockquote>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131195550194.png" alt="image-20210131195550194"></p>
+<p>因此，web项目构件输出的配置尤为重要，很多时候web项目无法启动的原因就是web构件配置错误</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20210131200448223.png" alt="image-20210131200448223"></p>
+<blockquote>
+<p>构件输出分为两个部分，其一WEB-INF包括java代码和库文件，另一个是webapp下的静态资源，</p>
+<p>可以选择哪些库文件最终输出到构件，这与编译无关</p>
+</blockquote>
+<h1 id="IDEA项目结构"><a href="#IDEA项目结构" class="headerlink" title="IDEA项目结构"></a>IDEA项目结构</h1><h2 id="1-项目"><a href="#1-项目" class="headerlink" title="1.项目"></a>1.项目</h2><p>需要配置JDK</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151054391.png" alt="image-20200914151054391"></p>
+<h2 id="2-模块"><a href="#2-模块" class="headerlink" title="2.模块"></a>2.模块</h2><p>配置源码目录，添加依赖等</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151711865.png" alt="image-20200914151711865"></p>
+<p>手动为模块添加tomcat依赖</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914170333397.png" alt="image-20200914170333397"></p>
+<p>为导入的web项目手动指定web.xml文件</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151507681.png" alt="image-20200914151507681"></p>
+<h2 id="3-库文件"><a href="#3-库文件" class="headerlink" title="3.库文件"></a>3.库文件</h2><p>管理项目库文件，分为全局库和模块库</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914151903313.png" alt="image-20200914151903313"></p>
+<h2 id="4-facet"><a href="#4-facet" class="headerlink" title="4.facet"></a>4.facet</h2><p>配置和查看项目所有的框架</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914152053874.png" alt="image-20200914152053874"></p>
+<h2 id="5-工件部署"><a href="#5-工件部署" class="headerlink" title="5.工件部署"></a>5.工件部署</h2><p>服务于所有需要服务器部署的模块和主项目</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914152204019.png" alt="image-20200914152204019"></p>
+<h2 id="6-输出"><a href="#6-输出" class="headerlink" title="6.输出"></a>6.输出</h2><blockquote>
+<p>idea输出文件包括<br>artifacts  部署的工件</p>
+<p>production 模块编译后的原码</p>
+<p>target  项目默认创建的src输出，在和.out同目录下target目录</p>
+</blockquote>
+<p><span style="color:red">检查一个web项目是否配置成功只需要查看artifacts目录下有没有相应的工件部署</span></p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914153613297.png" alt="image-20200914153613297"></p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20200914154725853.png" alt="image-20200914154725853"></p>
+<h1 id="IDEA常见错误"><a href="#IDEA常见错误" class="headerlink" title="IDEA常见错误"></a>IDEA常见错误</h1><h2 id="1-编码问题"><a href="#1-编码问题" class="headerlink" title="1.编码问题"></a>1.编码问题</h2><p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20201103110604953.png" alt="image-20201103110604953"></p>
+<p>右下角文件编码应为GBK，否则会出现编码问题</p>
+<p>windows倘若配置成其他编码，代码中写的任何中文，直接在内存中就出现乱码</p>
+<p><img src="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20201103110852382.png" alt="image-20201103110852382"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag"># 开发工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/20/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="mysql数据库高级">
+                <i class="fa fa-chevron-left"></i> mysql数据库高级
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/20/MyBatis%E5%AD%A6%E4%B9%A0/" rel="prev" title="MyBatis入门">
+                MyBatis入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IDEA%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">IDEA常用快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IDEA%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97"><span class="nav-text">IDEA使用心得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-web%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E7%83%AD%E9%83%A8%E7%BD%B2VS%E9%87%8D%E6%96%B0%E9%83%A8%E7%BD%B2"><span class="nav-text">1.web使用中的热部署VS重新部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%96%AD%E7%82%B9%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-text">2.断点使用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E7%82%B9%E5%87%BB%E6%8C%89%E9%92%AE%E5%8F%AF%E4%BB%A5%E4%B8%80%E9%94%AE%E7%A6%81%E7%94%A8%E6%89%80%E6%9C%89%E6%96%AD%E7%82%B9"><span class="nav-text">2.1点击按钮可以一键禁用所有断点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%96%AD%E7%82%B9%E7%9A%84%E4%B8%8D%E5%8F%AF%E8%BF%BD%E8%B8%AA"><span class="nav-text">2.2 断点的不可追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%96%AD%E7%82%B9%E7%AA%81%E9%81%87%E5%A4%A9%E5%A4%96%E2%80%9D%E5%B8%A7%E2%80%9D%E6%9D%A5%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="nav-text">2.3 断点突遇天外”帧”来如何处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4IDEA%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%96%AD%E7%82%B9"><span class="nav-text">2.4IDEA中的各种断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8D%95%E8%8E%B7%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-text">3.捕获的错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BB%8Egithub%E4%B8%8A%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="nav-text">4.从github上下载的项目的启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8F%8C%E5%87%BB%E6%89%93%E5%BC%80%E9%A6%96%E9%A1%B5"><span class="nav-text">5.双击打开首页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%B7%A5%E4%BB%B6%E7%9A%84%E9%83%A8%E7%BD%B2"><span class="nav-text">6.工件的部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IDEA%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-text">IDEA项目结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A1%B9%E7%9B%AE"><span class="nav-text">1.项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97"><span class="nav-text">2.模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-text">3.库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-facet"><span class="nav-text">4.facet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B7%A5%E4%BB%B6%E9%83%A8%E7%BD%B2"><span class="nav-text">5.工件部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BE%93%E5%87%BA"><span class="nav-text">6.输出</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IDEA%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-text">IDEA常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-text">1.编码问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.数据库基本操作1.查询 select distinct price from book;  加上distinct修饰，结果不会出现重复。  select price price*0.7 as new_price from book;  列可以是表达式  ORDER BY first_name DESC加上DESC为降序 ORDER BY 同样可以接表达式，不一定是列名称，例如： ORDER B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql数据库高级">
+<meta property="og:url" content="http://example.com/2020/04/20/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.数据库基本操作1.查询 select distinct price from book;  加上distinct修饰，结果不会出现重复。  select price price*0.7 as new_price from book;  列可以是表达式  ORDER BY first_name DESC加上DESC为降序 ORDER BY 同样可以接表达式，不一定是列名称，例如： ORDER B">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-04-20T09:20:03.000Z">
+<meta property="article:modified_time" content="2021-03-29T10:00:55.379Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2020/04/20/mysql数据库学习笔记/"/>
+
+
+
+
+
+  <title>mysql数据库高级 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/20/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql数据库高级</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-20T17:20:03+08:00">
+                2020-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-数据库基本操作"><a href="#1-数据库基本操作" class="headerlink" title="1.数据库基本操作"></a>1.数据库基本操作</h1><h2 id="1-查询"><a href="#1-查询" class="headerlink" title="1.查询"></a>1.查询</h2><blockquote>
+<p>select <code>distinct</code> price from book;</p>
+</blockquote>
+<p>加上distinct修饰，结果不会出现重复。</p>
+<blockquote>
+<p>select price price*0.7 as new_price from book;</p>
+</blockquote>
+<p>列可以是表达式</p>
+<ul>
+<li><p>ORDER BY first_name DESC<br>加上DESC为降序</p>
+<p>ORDER BY 同样可以接表达式，不一定是列名称，例如：</p>
+<p>ORDER BY quantity * unity_price DESC;</p>
+</li>
+<li><p>LIMIT 控制显示结果条数，常用于分页</p>
+</li>
+<li><p>多表查询需要先连接，连接为JOIN关键字，可选INNER（内连接，INNER可省略）和OUTER（外连接），后接ON填入连接条件，常用主键相等连接</p>
+</li>
+<li><p>跨数据库连接同内连接，只要在join语句中加上当前use的数据库之外的数据库前缀即可。</p>
+</li>
+<li><p>可以使用同一个表进行自连接，得到一个新表</p>
+</li>
+<li><p>多表连接：当一个表有多个外键时，使用组合join on语句连接多个表进行操作</p>
+<p>例如：</p>
+<blockquote>
+<p>select * from orders </p>
+<p>​     join Customer</p>
+<p>​            on where  </p>
+<p>​    join Band</p>
+<p>​            on where</p>
+</blockquote>
+</li>
+<li><p>复合主键的连接</p>
+<blockquote>
+<p>在一个表中可以有多个主键，同时具有多个主键的表中可能单个主键的列已经无法唯一表示的一条数据了，而是多个主键组合约束为一条 为唯一的数据。</p>
+</blockquote>
+<p>使用复合连接条件只需在join on的条件子句中用AND组合复合条件。</p>
+<p>JOIN order_item_notes oin</p>
+<p>​    ON oi.order_id = oin.order_id</p>
+<p>​    AND oi.product_id = oin.product_id </p>
+</li>
+<li><p>隐式连接</p>
+<p>直接使用FROM多个表。并在在WHERE中包含多个表的属性条件，尽管mysql支持这种隐式连接，但是如果WHERE条件子句往写，会得到多个表交叉的结果，即整个相乘的记录数。不建议使用。</p>
+</li>
+<li><p>外连接与多表外连接</p>
+<blockquote>
+<p>对于内连接，在on条件句中，两个表的属性只有都符合这个条件时才会显示未结果，但有些时候。我们希望其中一个的内容的这个属性即使为空，也显示在结果中。即仅需一个条件满足即可的连接：分为左连接和右连接。左连接表示左边的表为主表，为空也会显示在结果中。</p>
+</blockquote>
+</li>
+<li><p>当JOIN ON的连接条件中两个表中的属性名一致，可以简写为USING()，例如：</p>
+<blockquote>
+<p>JOIN customers C</p>
+<p>​    ON C.customer_id=O.customer_id</p>
+<p>简写为</p>
+<p>​    USING (customer_id)</p>
+</blockquote>
+</li>
+<li><p>自然连接，即简写的连接，由数据库自己判断，建立在多个列的属性名一致的情况下，若无列属性一致，则为交叉连接。交由数据库自己判断，不建议使用。</p>
+</li>
+<li><p>交叉连接CROSS JOIN</p>
+<blockquote>
+<p>如果FROM多个表而没有WHERE条件语句则默认也是交叉连接，并非显示写出CROSS才为交叉连接。</p>
+</blockquote>
+</li>
+<li><p>UNION联合</p>
+<p>合并多个查询结果,例：</p>
+<blockquote>
+<p>SELECT</p>
+<p>​        order_id,</p>
+<p>​        order_date,</p>
+<p>​        ‘Active’ AS status</p>
+<p>FROM orders</p>
+<p>WHERE order_date &lt; ‘2019-01-01’</p>
+<p>UNION</p>
+<p>SELECT</p>
+<p>​        order_id,</p>
+<p>​        order_date,</p>
+<p>​        ‘Archived’ AS status</p>
+<p>FROM orders</p>
+<p>WHERE order_date &gt;= ‘2019-01-01’</p>
+</blockquote>
+</li>
+<li><p>复制表或抽取表中部分作为新表</p>
+<p>CREATE TABLE AS SELECT子句</p>
+</li>
+<li><p>聚合函数Aggregate Function</p>
+<blockquote>
+<p>MAX()</p>
+<p>MIN()</p>
+<p>AVG()</p>
+<p>SUM()</p>
+<p>COUNT()</p>
+<p>只返回非空记录数，填入*号可返回总记录数</p>
+</blockquote>
+</li>
+<li><p>GROUP BY子句</p>
+<blockquote>
+<p>GROUP BY子句永远置于FROM和WHERE之后，ORDER BY之前</p>
+<p>可以根据多个列来分组，得到每一个确定的唯一组合。</p>
+<p>GROUP BY 不能使用列别名</p>
+</blockquote>
+</li>
+<li><p>HAVING子句</p>
+<p>用于分组后条件子句，配合聚合函数使用，对分组后聚合函数得到值和分组后的列再进行筛选。</p>
+<blockquote>
+<p>SELECT </p>
+<p>​            client_id,</p>
+<p>​            SUM(invoice_total) AS total_sales,</p>
+<p>​            COUNT (*) AS number_of_invoices</p>
+<p>FROM invoices</p>
+<p>GROUP BY client_id</p>
+<p>HAVING total_sales &gt; 500 AND number_of_invoice &gt; 5;</p>
+</blockquote>
+</li>
+<li><p>WITH ROLLUP聚合后再汇总</p>
+<blockquote>
+<p>GROUP BY state , city WITH ROLLUP;</p>
+<p>mysql特有，其他数据库可能不支持该语法</p>
+</blockquote>
+</li>
+<li><p>子查询语句</p>
+<p>WHIERE条件中嵌套SELECT查询语句</p>
+<blockquote>
+<p>SELECT *</p>
+<p>FROM employees</p>
+<p>WHERE salary &gt; (</p>
+<p>​            SELECT AVG (salary)</p>
+<p>​            FROM employees</p>
+<p>)</p>
+<p>查询薪水大于平均值的记录数</p>
+</blockquote>
+</li>
+<li><p>ALL和ANY(或者SOME)关键字</p>
+<p>用于单个值和集合的比较，为ALL表示大于或小于集合里所有的，为ANY表示大于或小于集合里任意一个。</p>
+<blockquote>
+<p>SELECT * </p>
+<p>FROM invoices</p>
+<p>WHERE invoice_total &gt; ALL(</p>
+<p>​        SELECT invoice_total</p>
+<p>​        FROM invoices</p>
+<p>​        WHERE client_id =3</p>
+<p>)</p>
+<p>可用MAX或MIN改写</p>
+</blockquote>
+</li>
+<li><p>使用自连接的子查询</p>
+<p>嵌套关系中，遍历外层的e.office_id作为内层的参数，对内层进行遍历，返回结果来作为外层的判断的参数。</p>
+<blockquote>
+<p>SELECT *</p>
+<p>FROM employees e</p>
+<p>WHERE salary &gt; (</p>
+<p>SELECT AVG (salary)</p>
+<p>FROM employees</p>
+<p>WHERE office_id = e.office_id</p>
+<p>)</p>
+<p>查询薪资高于所在部门平均薪资的干员</p>
+</blockquote>
+</li>
+<li><p>EXISTS关键字</p>
+<p>对于只需要判断有无的问题中，EXISTS关键字可以提高运行效率。而不是使用IN，因为使用IN关键字时，SELECT子句会返回真正的结果，而EXISTS不会返回结果。</p>
+</li>
+<li><p>SELECT中的子查询</p>
+<p>常使用聚合函数，如果子查询中查询出多个结果会产生错误，因为在SELECT语句中只能是一条记录，所以嵌套SELECT子查询也只能返回一条记录的某个属性。</p>
+</li>
+<li><p>FROM中子查询</p>
+<p>嵌套不建议使用，可用试图替代</p>
+</li>
+<li><p>常见内置函数</p>
+<ul>
+<li>数字类</li>
+</ul>
+<blockquote>
+<p>ROUND(param1,param2)    用于四舍五入</p>
+<p>TRUNCATE(param1,param2)    用于截断数字</p>
+<p>CEILING（param1）</p>
+<p>FLOOR（param1）两个取整函数</p>
+<p>ABS（param1）    绝对值函数</p>
+<p>RAND（param1）    随机函数，生成0~1的随机小数</p>
+</blockquote>
+<ul>
+<li>字符类</li>
+</ul>
+<blockquote>
+<p>LENGTH（） 返回长度</p>
+<p>LOWER（）</p>
+<p>UPPER（）</p>
+<p>LTRIM（）清除左空格</p>
+<p>RTRIM（）清除右空格</p>
+<p>LEFT（param1,param2，param3） 返回param2个字符</p>
+<p>RIGHT（param1,param2，param3）</p>
+<p>SUBSTRING（param1，param2，param3）</p>
+<p>LOCATE（param1，param2）返回param1在字符串param2中的位置，无则返回0</p>
+<p>REPLACE（）</p>
+<p>CONCAT（）</p>
+</blockquote>
+<ul>
+<li>日期类</li>
+</ul>
+<blockquote>
+<p>CURDATE（）</p>
+<p>CURTIME（）</p>
+<p>NOW（）</p>
+<p>YEAR/MONTH/DAY/HOUR/MINUTE/SECOND（NOW（）） 时间戳转换</p>
+<p>DATE_FORMAT（NOW(),’%M  %d %Y’）</p>
+</blockquote>
+</li>
+<li><p>IFNULL和COALESCE</p>
+<p>IFNULL(shipper,’Not assigned’)  若为空用未指定代替</p>
+<p>COALESCE(shipper_id,comments,’Not assigned’) 若为空，一次用comments….等内容代替，全部为空最后用未指定代替。</p>
+</li>
+<li><p>IF（）函数</p>
+<p>格式：IF(condition,result1,result2)</p>
+<blockquote>
+<p>SELECT</p>
+<p>​        order_id,</p>
+<p>​        order_date</p>
+<p>​        IF(</p>
+<p>​                YEAR(order_date) = YEAR(NOW()),</p>
+<p>​                ‘Active’,</p>
+<p>​                ‘Archived’)</p>
+<p>FROM orders</p>
+<p>简写了上次UNION的案例</p>
+</blockquote>
+</li>
+<li><p>CASE WHEN语句</p>
+<p>格式：CASE</p>
+<p>​                    WHEN 条件1    THAN</p>
+<p>​                    WHEN 条件2    THAN</p>
+<p>​                    ELSE</p>
+<p>​            END AS <code>category</code></p>
+</li>
+<li><p>视图VIEW</p>
+<p>把某个需要重复使用的子查询保存为视图，该视图可以同表一样使用，创建视图简化了子查询的嵌套使用。</p>
+<p>用法：</p>
+<blockquote>
+<p><code>CREATE VIEW</code> sales_by_client <code>AS</code></p>
+<p>SELECT</p>
+<p>​        c.client_id,</p>
+<p>​        c.name,</p>
+<p>​        SUM(invoice_total) AS total_sale</p>
+<p>FROM client c</p>
+<p>JOIN invoices i USING (client_id)</p>
+<p>GROUP BY client_id,name</p>
+</blockquote>
+<p>创建视图后，不会有任何查询结果，而是在数据库视图目录下创建一个视图文件。</p>
+</li>
+<li><p>可更新视图</p>
+<p>创建视图时，没有使用DISTINCT、聚合函数、GROUP BY、且包含所有不能为空的要素，则该视图是可更新的。</p>
+</li>
+<li><p>WITH OPTION CHECK</p>
+<p>创建视图时加上WITH  OPTION CHECK会防止对视图修改造成记录消失。（当修改记录导致记录不符合视图筛选的条件时也会导致记录消失。）</p>
+</li>
+<li><p>视图的作用</p>
+<ul>
+<li>简化查询</li>
+<li>减小数据库设计改动带来的影响（视图在SQL语句和基础表之间加了一层抽象层）</li>
+<li>限制直接对数据进行操作，增加了数据的安全性</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-插入、更新及删除"><a href="#2-插入、更新及删除" class="headerlink" title="2.插入、更新及删除"></a>2.插入、更新及删除</h2><ul>
+<li><p>插入单行 </p>
+<p>INSERT INTO shippers(name)</p>
+<p>VALUES   (‘Shipper1’);</p>
+</li>
+<li><p>插入多行</p>
+<p>INSERT INTO shippers(name)</p>
+<p>VALUES   (‘Shipper1’)，</p>
+<p>​                 (‘Shipper2’)，</p>
+<p>​                 (‘Shipper1’);</p>
+</li>
+<li><p>插入单行和插入多行组合实现新增一个订单(order)的同时，在order子表order_item中插入多个商品</p>
+<blockquote>
+<p>INSERT INTO orders(customer_id,order_date,status)</p>
+<p>VALUES(1,’2021-01-01’,1)</p>
+<p>INSERT INTO order_items</p>
+<p>VALUES   (LAST_INSERT_ID()，1,1,2.95),</p>
+<p>​                 (LAST_INSERT_ID()，2,1,2.95),</p>
+<p>​                 (LAST_INSERT_ID()，3,1,2.95);</p>
+</blockquote>
+</li>
+<li><p>更新单行</p>
+<p>UPDATE invoices</p>
+<p>SET </p>
+<p>​        payment_total = 0,  </p>
+<p>​        payment_date  = NULL</p>
+<p>WHERE invoice_id = 1;</p>
+</li>
+<li><p>多行更新同单行更新，只是WHERE条件匹配多行，但因为mysql数据库默认为安全更新，阻断一次性更新多行，需要关闭安全更新才能使用多行更新。</p>
+</li>
+<li><p>在UPDATE中使用SELECT子查询</p>
+<blockquote>
+<p>UPDATE orders</p>
+<p>SET  comments = ‘Gold customer’</p>
+<p>WHERE customer_id IN</p>
+<p>​        (SELECT customer_id</p>
+<p>​        FROM customers</p>
+<p>​        WHERE points &gt; 3000);</p>
+</blockquote>
+</li>
+<li><p>删除记录</p>
+<p>DELETE FROM invoices</p>
+<p>WHERE invoce_id = 1;</p>
+<p>同样也可以使用SELECT子句</p>
+</li>
+<li><p>恢复数据库</p>
+</li>
+</ul>
+<h2 id="3-基本运算符"><a href="#3-基本运算符" class="headerlink" title="3.基本运算符"></a>3.基本运算符</h2><ul>
+<li><blockquote>
+<p>‘&gt;=’ ‘&lt;=’ ‘&gt;’ ‘&lt;’ ‘=’</p>
+<p><code>!=</code>和<code>&lt;&gt;</code>,都是不等于</p>
+</blockquote>
+</li>
+<li><p>运算符还可以用于日期运算，例：</p>
+</li>
+</ul>
+<p>select * </p>
+<p>from orders</p>
+<p>where order_date &gt;= ‘2020-12-31’</p>
+<ul>
+<li><p>逻辑运算符 or 和 and以及not</p>
+<p>优先级not&gt;and&gt;or，同时出现和and和or时，and会优先结合成为一个整体。但可用括号来控制or和and的结合顺序。</p>
+</li>
+<li><p>运算符IN集合运算，用于离散集合</p>
+<blockquote>
+<p>where state=’VA’ or state=’GA’ or state=’FL’ </p>
+<p>等效于</p>
+<p>where state IN(‘VA’,’FA’,’GA’)</p>
+</blockquote>
+</li>
+<li><p>BETWEEN 1000 AND 3000 用于连续区间（同样可以用于日期）</p>
+</li>
+<li><p>LIKE的模糊匹配</p>
+<p>%  匹配任意长度字符</p>
+<p>_    匹配单个字符</p>
+</li>
+<li><p>使用正则匹配REGEXP<br>WHERE last_name REGEXP ‘ey$|on$’</p>
+<p>匹配以ey或者on结尾</p>
+</li>
+<li><p>IS NULL或者IS NOT NULL，空或不为空</p>
+<p>WHERE phone IS NOT NULL;</p>
+</li>
+</ul>
+<h1 id="2-高级操作"><a href="#2-高级操作" class="headerlink" title="2.高级操作"></a>2.高级操作</h1><h2 id="1-创建存储过程-CREATE-PROCEDURE"><a href="#1-创建存储过程-CREATE-PROCEDURE" class="headerlink" title="1.创建存储过程 CREATE PROCEDURE"></a>1.创建存储过程 CREATE PROCEDURE</h2><ul>
+<li>所谓创建存储过程，即把数据库语句交个数据库存储，编程语言通过暴露的“函数”来执行SQL语句。</li>
+</ul>
+<blockquote>
+<p>格式：</p>
+<p>DELIMITER $$</p>
+<p>CREATE PROCEDURE get_clients( )</p>
+<p>BEGIN</p>
+<p>​        SELECT * FROM clients;  <code>#因为中间可能会有多条SQL语句，故要求每条语句都记上分号</code></p>
+<p>END$$</p>
+<p>DELIMITER ;</p>
+</blockquote>
+<p>执行后，可通过CALL get_client()调用</p>
+<h2 id="2-带参数的PROCEDURE"><a href="#2-带参数的PROCEDURE" class="headerlink" title="2.带参数的PROCEDURE"></a>2.带参数的PROCEDURE</h2><blockquote>
+<p>格式：</p>
+<p>DELIMITER $$</p>
+<p>CREATE PROCEDURE get_clients_by_state</p>
+<p>(</p>
+<p>​        state CHAR( 2 )</p>
+<p> )</p>
+<p>BEGIN</p>
+<p>​        SELECT * FROM clients c</p>
+<p>​        WHERE  c.state = state;</p>
+<p>END$$</p>
+<p>DELIMITER ;</p>
+</blockquote>
+<p>通过CALL get_clients_by_state( ‘CA’ )调用</p>
+<h2 id="3-带输出的PROCEDURE"><a href="#3-带输出的PROCEDURE" class="headerlink" title="3.带输出的PROCEDURE"></a>3.带输出的PROCEDURE</h2><blockquote>
+<p>set @invoices_count= 0 ;</p>
+<p>set @invoices_total = 0;</p>
+<p>call sql_invoicing.get_unpaid_invoices_for_client</p>
+<p>​            (3,@invoices_count,@invoices_total);</p>
+<p>select @invoices_count,@invoices_total;</p>
+<p>在call函数声明输出变量，定义两个变量接受这个out，并使用select 查询显示结果</p>
+</blockquote>
+<p>以下为PROCEDURE：</p>
+<blockquote>
+<p>DELIMITER $$</p>
+<p>CREATE PROCEDURE get_unpaid_invoices_for_client</p>
+<p>(</p>
+<p>​        client_id INI,</p>
+<p>OUT invoices_count INI,</p>
+<p>OUT invoices_total DECIMAL( 9,2 )</p>
+<p>)</p>
+<p>BEGIN</p>
+<p>​        SELECT COUNT(*), SUM(invoice_total)</p>
+<p>​        INTO invoices_count, invoices_total</p>
+<p>​        FROM invoices i</p>
+<p>​        WHERE  i.client_id = client_id</p>
+<p>​                AND payment_total = 0;</p>
+<p>END$$</p>
+<p>DELIMITER ;</p>
+</blockquote>
+<h2 id="4-变量声明与使用"><a href="#4-变量声明与使用" class="headerlink" title="4.变量声明与使用"></a>4.变量声明与使用</h2><ul>
+<li><p>使用set</p>
+<blockquote>
+<p>set声明的变量仅限于会话期间，会话或连接关闭变量会销毁。</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/29/git%E5%AD%A6%E4%B9%A0/" rel="next" title="git初认识">
+                <i class="fa fa-chevron-left"></i> git初认识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/29/IDEA%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE/" rel="prev" title="IDEA使用记录">
+                IDEA使用记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">1.数据库基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9F%A5%E8%AF%A2"><span class="nav-text">1.查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8F%92%E5%85%A5%E3%80%81%E6%9B%B4%E6%96%B0%E5%8F%8A%E5%88%A0%E9%99%A4"><span class="nav-text">2.插入、更新及删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">3.基本运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C"><span class="nav-text">2.高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B-CREATE-PROCEDURE"><span class="nav-text">1.创建存储过程 CREATE PROCEDURE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84PROCEDURE"><span class="nav-text">2.带参数的PROCEDURE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%A6%E8%BE%93%E5%87%BA%E7%9A%84PROCEDURE"><span class="nav-text">3.带输出的PROCEDURE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-text">4.变量声明与使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
